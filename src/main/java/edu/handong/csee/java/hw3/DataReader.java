@@ -1,42 +1,52 @@
 package edu.handong.csee.java.hw3;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class DataReader {
 
-	//directory path´Â commend line¿¡¼­!
+	private String filePath; //input from CLI  "C:\\Users\\jo jeong hoon\\Desktop\\messages"
+	
+	private ArrayList<Data> dataListFromCsv = new ArrayList<Data>();
+	private ArrayList<Data> dataListFromTxt = new ArrayList<Data>();
+	
+	
+	public void readFiles(String filePath){ 
+		
+		this.filePath = filePath; //ì§€ì›Œ
 
-	public ArrayList<String> getData(String strDir){ //detail stepÀº privateÀ¸·Î 
+		File dir = new File(filePath);
 
-		//get directory
-		File myDir = getDirectory(strDir);
+		File[] files = dir.listFiles();
 
-		//get ListOfFilesFromDirectory(myDir)
-		File[] files = getListOfFilesFromDirectory(myDir);
+		for(File file: files) {
+			
+			if(file.getName().endsWith(".csv")) {
+				dataListFromCsv = DataReaderForCsv.gettingMessageFromCsvFiles(file);
+//for check				System.out.println("file name: " + file.getName());
+			}
+			
+			else if(file.getName().endsWith(".txt")) {
+				dataListFromTxt = DataReaderForTxt.gettingMessageFromTxtFiles(file);
+//for check				System.out.println("file name: " + file.getName());
+				
+			}
+		}
 
-		ArrayList<String> messages = readFiles(files);
-
-		return messages;
 
 	}
-
-	private File getDirectory(String strDir){
-
-		File myDirectory = new File(strDir);
-		return myDirectory;
-	}
-
-	private File[] getListOfFilesFromDirectory(File dataDir){
-
-		return dataDir.listFiles(); //file object¿¡ ¸¹Àº methodÀÖ´Ù for example, "list()" >return String array. But we want File array
-	}								 //file.path
-
-	private ArrayList<String> readFiles(File[] files){
-
-		ArrayList<String> messages = new ArrayList<String>();
-
-		return messages;
-		//to read files we need main method
+	
+	public static void main(String[] args) {
+		
+		String filePath = "C:\\Users\\jo jeong hoon\\Desktop\\messages";
+		DataReader reader = new DataReader();
+		
+		reader.readFiles(filePath);
 	}
 }
