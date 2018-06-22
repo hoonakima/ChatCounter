@@ -13,8 +13,8 @@ public class DataReader {
 
 	private String filePath; //input from CLI  "C:\\Users\\jo jeong hoon\\Desktop\\messages"
 	
-	private ArrayList<Data> dataListFromCsv = new ArrayList<Data>();
-	private ArrayList<Data> dataListFromTxt = new ArrayList<Data>();
+	private static ArrayList<Data> dataListFromCsv = new ArrayList<Data>();
+	private static ArrayList<Data> dataListFromTxt = new ArrayList<Data>();
 	
 	
 	public void readFiles(String filePath){ 
@@ -46,7 +46,12 @@ public class DataReader {
 		
 		String filePath = "C:\\Users\\jo jeong hoon\\Desktop\\messages";
 		DataReader reader = new DataReader();
+		RedundancyChecker checker = new RedundancyChecker();
+		ArrayList<Data> csvDataList = new ArrayList<Data>();
 		
 		reader.readFiles(filePath);
-	}
+		csvDataList = checker.finalCheckingRedundancy(dataListFromCsv, dataListFromTxt);
+//		System.out.println("csv list: " + dataListFromCsv.size() + "txt list: " + dataListFromTxt.size());
+//		System.out.println(csvDataList.size());
+	}		
 }

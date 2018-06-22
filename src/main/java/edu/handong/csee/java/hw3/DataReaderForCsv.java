@@ -62,23 +62,10 @@ public class DataReaderForCsv {
 				e.printStackTrace();
 			}
 		
-		for(Data d : dataList) {
-				System.out.println(d.getTime() + " " + d.getName() + " " + d.getMessage());
-		}
 		
 		return dataList;
 
 		
 	}
-
-
-//	public static void main(String[] args) {
-//		DataReaderForCsv reader = new DataReaderForCsv();
-//
-//		
-//		reader.gettingMessageFromCsvFiles(file);
-//
-//
-//	}
 
 }

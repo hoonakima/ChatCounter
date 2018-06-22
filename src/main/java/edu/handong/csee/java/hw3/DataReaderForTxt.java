@@ -83,10 +83,9 @@ public class DataReaderForTxt {
 			e.printStackTrace();
 		}
 		
-		for(Data data : dataList) {
-			
-			System.out.println(data.getTime() + " " + data.getName() + " " + data.getMessage());
-		}
+//for check		for(Data data : dataList) {
+//			System.out.println(data.getTime() + " " + data.getName() + " " + data.getMessage());
+//		}
 		
 		return dataList;
 
