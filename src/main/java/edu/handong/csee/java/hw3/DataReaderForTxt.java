@@ -15,16 +15,16 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DataReaderForTxt {	
+public class DataReaderForTxt implements DataReaderForFile {	
 
 	public static ArrayList<Data> dataList = new ArrayList<Data>();
-	
+
 	public DataReaderForTxt() {
 
 	}
 
-	public static ArrayList<Data> gettingMessageFromTxtFiles(File file) {
-		
+	public ArrayList<Data> gettingMessageFromFiles(File file) {
+
 		String line = null;
 		String ymd = null;
 		String hourMinute = null; 
@@ -33,15 +33,15 @@ public class DataReaderForTxt {
 		String message = null;
 
 		try {
-			
+
 			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
 
 			try {
-				
+
 				br.readLine();
 				br.readLine();
 				br.readLine();
-				
+
 				while((line = br.readLine())!= null) {
 
 					String patternForYmd = "-+\\s([0-9]+).\\s([0-9]+).\\s([0-9]+).\\s...\\s-+";
@@ -51,10 +51,10 @@ public class DataReaderForTxt {
 
 					if(m1.find()) {
 						ymd = m1.group(1)+ "-" + m1.group(2) + "-" + m1.group(3); 
-//for check						System.out.println(ymd);
+						//for check						System.out.println(ymd);
 						//ymd: 2018-4-27
 					}
-					
+
 					String pattern = ".(.+).\\s.(..\\s[0-9]+.[0-9]+).\\s(.+)";
 					Pattern p2 = Pattern.compile(pattern);
 					Matcher m2 = p2.matcher(line);
@@ -67,7 +67,7 @@ public class DataReaderForTxt {
 						hourMinute = m2.group(2);
 						message = m2.group(3);
 						time = ymd + " " + hourMinute;
-						
+
 						DataReaderForTxt.dataScaling(data, ymd, hourMinute, name, message);
 
 					}
@@ -82,19 +82,15 @@ public class DataReaderForTxt {
 
 			e.printStackTrace();
 		}
-		
-//for check		for(Data data : dataList) {
-//			System.out.println(data.getTime() + " " + data.getName() + " " + data.getMessage());
-//		}
-		
+
 		return dataList;
 
-}
+	}
 
 	public static void dataScaling(Data data, String ymd, String hourMinute, String name, String message) {
-		
-//I think I dont need to do this		String scaledName = "\"" + name + "\"";
-//										String scaledMessage = "\"" + message + "\"";
+
+		//I think I dont need to do this		String scaledName = "\"" + name + "\"";
+		//										String scaledMessage = "\"" + message + "\"";
 		String scaledYmd = ymd;
 		String scaledHourMinute = hourMinute;
 
@@ -141,9 +137,9 @@ public class DataReaderForTxt {
 		data.setTime(scaledYmd + " " + scaledHourMinute);
 		data.setName(name);
 		data.setMessage(message);
-		
+
 		dataList.add(data);
-		
+
 
 	}
 

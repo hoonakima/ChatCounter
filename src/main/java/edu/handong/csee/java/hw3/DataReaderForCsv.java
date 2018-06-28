@@ -15,19 +15,16 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 
-public class DataReaderForCsv {
+public class DataReaderForCsv implements DataReaderForFile{
 
-	//	private File csvFile = new File("C:\\Users\\jo jeong hoon\\Desktop\\messages\\JavaProgramming-L2.csv");     //get directory path from the Command Line
-	
 	public static ArrayList<Data> dataList = new ArrayList<Data>(); //static modifier because I want to use ONE dataList
-	
 	
 	
 	public DataReaderForCsv() {
 		
 	}
 
-	public static ArrayList<Data> gettingMessageFromCsvFiles(File file) {	
+	public ArrayList<Data> gettingMessageFromFiles(File file) {	
 		
 		BufferedReader br;
 		
@@ -53,7 +50,7 @@ public class DataReaderForCsv {
 				
 				dataList.add(data);
 				
-
+				
 			}} catch (UnsupportedEncodingException e1) {
 				e1.printStackTrace();
 			} catch (FileNotFoundException e1) {
@@ -62,9 +59,9 @@ public class DataReaderForCsv {
 				e.printStackTrace();
 			}
 		
-		
+	
 		return dataList;
-
+		
 		
 	}
 

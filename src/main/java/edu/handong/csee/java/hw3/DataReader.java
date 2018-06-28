@@ -10,48 +10,39 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class DataReader {
-
-	private String filePath; //input from CLI  "C:\\Users\\jo jeong hoon\\Desktop\\messages"
 	
 	private static ArrayList<Data> dataListFromCsv = new ArrayList<Data>();
 	private static ArrayList<Data> dataListFromTxt = new ArrayList<Data>();
+	private static ArrayList<Data> totalDataList = new ArrayList<Data>();
 	
 	
-	public void readFiles(String filePath){ 
+	public ArrayList<Data> readFiles(String filePath){ 
 		
-		this.filePath = filePath; //지워
+		DataReaderForCsv csvReader = new DataReaderForCsv();
+		DataReaderForTxt txtReader = new DataReaderForTxt();
 
 		File dir = new File(filePath);
 
 		File[] files = dir.listFiles();
-
+				
 		for(File file: files) {
 			
+			
 			if(file.getName().endsWith(".csv")) {
-				dataListFromCsv = DataReaderForCsv.gettingMessageFromCsvFiles(file);
-//for check				System.out.println("file name: " + file.getName());
+				dataListFromCsv = csvReader.gettingMessageFromFiles(file);
+
 			}
 			
 			else if(file.getName().endsWith(".txt")) {
-				dataListFromTxt = DataReaderForTxt.gettingMessageFromTxtFiles(file);
-//for check				System.out.println("file name: " + file.getName());
+				dataListFromTxt = txtReader.gettingMessageFromFiles(file);
+
 				
 			}
 		}
+		
+		totalDataList = RedundancyChecker.finalCheckingRedundancy(dataListFromCsv, dataListFromTxt);
 
-
+		return totalDataList;
 	}
-	
-	public static void main(String[] args) {
 		
-		String filePath = "C:\\Users\\jo jeong hoon\\Desktop\\messages";
-		DataReader reader = new DataReader();
-		RedundancyChecker checker = new RedundancyChecker();
-		ArrayList<Data> csvDataList = new ArrayList<Data>();
-		
-		reader.readFiles(filePath);
-		csvDataList = checker.finalCheckingRedundancy(dataListFromCsv, dataListFromTxt);
-//		System.out.println("csv list: " + dataListFromCsv.size() + "txt list: " + dataListFromTxt.size());
-//		System.out.println(csvDataList.size());
-	}		
 }
